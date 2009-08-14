@@ -1,7 +1,7 @@
 <html><head>
 <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
 
-<title>Kanban Board</title>
+<title>Switchblade</title>
 <link rel="stylesheet" type="text/css" href="css/style.css" />
 <script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
 <script type="text/javascript" src="js/dragsort-0.3.min.js"></script>
@@ -10,17 +10,18 @@
 
 <!-- The data for the stories -->
 <textarea rows="1" id="stories" style="display: none;">
-P_Q,S17,Fix YSlow
-P,S3,Make application faster
-D_Q,S13,Build something astonishing
-D,S17,Do something with OpenID
-DE,S18,Checkout optimize
-DE,S7,Credit Card Payment
-DE,S10,Rebuild with REST
-DE,S39,Google Page Speed fix
-DE,S4,Rebuild with SOAP
-DE,S2,Build old shop
-T,S1,Build new shop
+P_Q,Fix YSlow
+P,Make application faster
+D_Q,Build something astonishing
+D,Do something with OpenID
+DE,Checkout optimize
+DE,Credit Card Payment
+DE,Rebuild with REST
+DE,Google Page Speed fix
+DE,Rebuild with SOAP
+DE,Build old shop
+T,Build new shop
+R, Some feature
 </textarea>
 
 <!-- Names and shortcuts for the different states:
@@ -28,7 +29,7 @@ T,S1,Build new shop
     They will be displayed in this order
 	 -->
 <textarea rows="1"  id="states" style="display:none;">
-P,Pdt
+P,Product
 D,Design
 DE,Dev
 T,Test
@@ -36,10 +37,10 @@ R,Deploy
 </textarea>
 
 <!-- The HTML starts here -->
-<a id="data_link" class="button" href="#" style="float:right;">Data</a>
-<a id="board_link" class="button" href="#" style="float:right;">Board</a>
+<a id="data_link" class="button" href="#" style="float:right;">Add Items to the Board</a>
+<a id="board_link" class="button" href="#" style="float:right;">Return to Board</a>
 
-<h1>Board</h1>
+<h1>Switchblade</h1>
 
 <div id="output"></div>
 

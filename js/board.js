@@ -19,7 +19,7 @@ var init_board = function(stories) {
 	for ( var i=0, len=stories.length; i<len; i++ ) {
 		var story = stories[i].split(",");
 		var state = story[0];
-		if (story.length == 3) {
+		if (story.length == 2) {
 			if (! board[state]) {
 				board[state] = [];
 			}
@@ -33,7 +33,7 @@ var create_list = function(board, state) {
 	   var list = $("<ul class=\"state\" id=\"" + state + "\"></ul>");
        if (board[state]) {
          for (var i=0, len=board[state].length; i<len; i++) {
-            var story_element = $("<li><div class=\"box box_" + state  + "\">" + board[state][i][1] + " " + board[state][i][2] + "</div></li>");
+            var story_element = $("<li><div class=\"box box_" + state  + "\">" + board[state][i][1] + "</div></li>");
             story_element.data("story",  board[state][i]);
 			list.append(story_element);
      	 }
@@ -42,11 +42,11 @@ var create_list = function(board, state) {
 }
 
 var create_column = function(board, state, headline) {
-	   var state_column = $("<div class=\"dp10" + ((! /_Q$/.test(state)) ? "" : " queue_column")+ "\"></div>")
-	   state_column.append($("<div class=\"headline\">" + headline + "</div>"));
-	   state_column.append(create_list(board, state));
-	   state_column.data("state", state);
-	   return state_column;
+	var state_column = $("<div class=\"dp10" + ((! /_Q$/.test(state)) ? "" : " queue_column")+ "\"></div>")
+	state_column.append($("<div class=\"headline\">" + headline + "</div>"));
+	state_column.append(create_list(board, state));
+	state_column.data("state", state);
+	return state_column;
 }
 
 var create_board = function(app_data) {
@@ -57,7 +57,7 @@ var create_board = function(app_data) {
 		if (! /_Q$/.test(state)) {
 			var queue_state = state + "_Q";
 			ids += "#" + queue_state + ",";
-		    var queue_state_column = create_column(app_data.board, queue_state, app_data.states[state] + " Ready")
+		    var queue_state_column = create_column(app_data.board, queue_state, app_data.states[state] + " Rdy")
 			table.append(queue_state_column)
 
 			ids += "#" + state + ","
@@ -65,8 +65,11 @@ var create_board = function(app_data) {
 			table.append(state_column)
 		}
 	}
-	$(ids, table).dragsort({ dragBetween: true });
+	$(ids, table).dragsort({ dragEnd: dragSave, dragBetween: true });
 	return table;
+}
+
+var dragSave = function() {
 }
 
 $("#board_link").click(function () {
@@ -74,7 +77,6 @@ $("#board_link").click(function () {
   var app_data = { board: init_board($("#data_output").val().split("\n")), states: state_data.states, states_order: state_data.states_order}
   $("#output").empty();
   $("#output").append(create_board(app_data));
-
   $("#output").show();
   $("#data_link").show();
   $("#data_output").hide();
@@ -87,7 +89,7 @@ $("#data_link").click(function () {
     var state = $(this).data("state");
 	$(this).find("li").each( function() {
 	   var story = $(this).data("story");
-	   data += state + "," + story[1] + "," + story[2] + "\n";
+	   data += state + "," + story[1] + "\n";
 	});
   });
   $("#data_output").val(data);
